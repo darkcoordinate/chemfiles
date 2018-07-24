@@ -188,6 +188,11 @@ void PDBFormat::read_ATOM(Frame& frame, const std::string& line,
 
     atom.set("is_hetatm", is_hetatm);
 
+    auto altloc = line.substr(16,1);
+    if (altloc != " ") {
+        atom.set("altloc", altloc);
+    }
+
     try {
         auto x = std::stof(line.substr(31, 8));
         auto y = std::stof(line.substr(38, 8));
@@ -472,6 +477,22 @@ void PDBFormat::write(const Frame& frame) {
             }
         }
 
+        std::string altloc = " ";
+        auto altloc_prop = frame.topology()[i].get("altloc");
+        if (altloc_prop) {
+            if (altloc_prop->get_kind() == Property::STRING) {
+                altloc = altloc_prop->as_string();
+            } // Silently ignore other types
+        }        
+
+        if (altloc.length() > 1) {
+            warning(
+                "Altloc '{}' is too long for PDB format, it will be truncated.",
+                altloc
+            );
+            altloc = altloc[0];
+        }
+
         std::string resname;
         std::string resid;
         std::string chainid;
@@ -531,8 +552,8 @@ void PDBFormat::write(const Frame& frame) {
         // 'resSeq' is set to be the atomic number.
         fmt::print(
             *file_,
-            "{: <6}{: >5} {: <4s} {:3} {:1}{: >4s}    {:8.3f}{:8.3f}{:8.3f}{:6.2f}{:6.2f}          {: >2s}\n",
-            atom_hetatm, to_pdb_index(i), frame[i].name(), resname, chainid, resid, pos[0], pos[1], pos[2], 1.0, 0.0, frame[i].type()
+            "{: <6}{: >5} {: <4s}{:1}{:3} {:1}{: >4s}    {:8.3f}{:8.3f}{:8.3f}{:6.2f}{:6.2f}          {: >2s}\n",
+            atom_hetatm, to_pdb_index(i), frame[i].name(), altloc, resname, chainid, resid, pos[0], pos[1], pos[2], 1.0, 0.0, frame[i].type()
         );
     }
 
