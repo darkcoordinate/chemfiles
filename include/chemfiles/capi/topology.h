@@ -194,6 +194,17 @@ CHFL_EXPORT chfl_status chfl_topology_remove_bond(
     CHFL_TOPOLOGY* topology, uint64_t i, uint64_t j
 );
 
+/// Remove all atoms not corresponding to a given alternative location.
+///
+/// This does not remove atoms without this propery set.
+///
+/// @example{tests/capi/doc/chfl_topology/select_altloc.c}
+/// @return The operation status code. You can use `chfl_last_error` to learn
+///         about the error if the status code is not `CHFL_SUCCESS`.
+CHFL_EXPORT chfl_status chfl_topology_select_altloc(
+    CHFL_TOPOLOGY* topology, char* altloc
+);
+
 /// Get the number of residues in the `topology` in the integer pointed to by
 /// `residues`.
 ///

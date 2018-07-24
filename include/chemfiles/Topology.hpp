@@ -223,6 +223,15 @@ public:
         connect_ = Connectivity();
     }
 
+    /// Remove all atoms not corresponding to a given alternative location.
+    ///
+    /// This does not remove atoms without this propery set.
+    ///
+    /// @example{tests/doc/topology/select_altloc.cpp}
+    ///
+    /// @param altloc the alternative locations to keep, others are removed
+    void select_altloc(std::string altloc);
+
     /// Add a `residue` to this topology.
     ///
     /// @example{tests/doc/topology/add_residue.cpp}

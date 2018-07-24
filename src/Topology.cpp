@@ -101,6 +101,15 @@ const std::vector<Improper>& Topology::impropers() const {
     return connect_.impropers().as_vec();
 }
 
+void Topology::select_altloc(std::string altloc) {
+    for (size_t i = 0; i < size(); i++) {
+        auto prop = atoms_[i].get("altloc");
+        if (prop && prop->get_kind() == Property::STRING && prop->as_string() != altloc) {
+            remove(i);
+        }
+    }
+}
+
 void Topology::add_residue(Residue residue) {
     for (auto i: residue) {
         auto it = residue_mapping_.find(i);

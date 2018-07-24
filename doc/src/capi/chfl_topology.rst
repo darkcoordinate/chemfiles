@@ -23,6 +23,8 @@ Function manipulating ``CHFL_TOPOLOGY``
 
 .. doxygenfunction:: chfl_topology_remove_bond
 
+.. doxygenfunction:: chfl_topology_select_altloc
+
 .. doxygenfunction:: chfl_topology_bonds_count
 
 .. doxygenfunction:: chfl_topology_angles_count

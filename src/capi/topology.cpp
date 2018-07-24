@@ -198,6 +198,13 @@ extern "C" chfl_status chfl_topology_remove_bond(CHFL_TOPOLOGY* const topology, 
     )
 }
 
+extern "C" chfl_status chfl_topology_select_altloc(CHFL_TOPOLOGY* const topology, char* altloc) {
+    CHECK_POINTER(topology);
+    CHFL_ERROR_CATCH(
+        topology->select_altloc(altloc);
+    )
+}
+
 extern "C" chfl_status chfl_topology_residues_count(const CHFL_TOPOLOGY* const topology, uint64_t* residues) {
     CHECK_POINTER(topology);
     CHECK_POINTER(residues);
