@@ -25,7 +25,7 @@ namespace chemfiles {
 ///   `Matrix3D`.
 ///
 /// @example{tests/doc/vector3d/ops.cpp}
-class Vector3D final: private std::array<double, 3> {
+class Vector3D final: public std::array<double, 3> {
     using super = std::array<double, 3>;
 public:
     /// Create a Vector3D with all components equal to 0.
@@ -174,7 +174,7 @@ static_assert(std::is_standard_layout<Vector3D>::value, "Vector3D must have a st
 ///   matrix and vector are defined, using the `*` operator.
 ///
 /// @example{tests/doc/matrix3d/ops.cpp}
-class Matrix3D final: private std::array<std::array<double, 3>, 3> {
+class Matrix3D final: public std::array<std::array<double, 3>, 3> {
     using super = std::array<std::array<double, 3>, 3>;
 public:
     /// Create a `Matrix3D` by explicitly specifying all the `m_ij` components
